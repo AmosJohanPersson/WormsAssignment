@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunPickup : MonoBehaviour
 {
+    //Pickup script for the gun pickups
+
     [SerializeField] private GameObject gunPrefab;
     [SerializeField] private GameObject spawner;
 

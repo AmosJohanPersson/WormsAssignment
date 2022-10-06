@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletExplosion : MonoBehaviour
 {
+    //Script for explosion collider on "stinky fish" weapon
     private bool damageIsDealt = false;
     public float styleDamage;
 
@@ -14,6 +15,7 @@ public class BulletExplosion : MonoBehaviour
             if (other.gameObject.tag == "Player" && !damageIsDealt)
             {
                 other.GetComponent<PlayerController>().ScoreStyle(-styleDamage);
+                damageIsDealt = true;
             }
         }
     }

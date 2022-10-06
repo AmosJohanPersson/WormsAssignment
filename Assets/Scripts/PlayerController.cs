@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //This class implements an action abstraction layer for the player, and directly implements movement. All actions governing the player or the weapons pass through this class. 
+
     Rigidbody rigid;
 
     public float mSpeed;
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
     public void EndTurn()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
+        GetCurrentWeapon().HideUI();
     }
 
     public void RefreshTurn()
@@ -159,6 +162,7 @@ public class PlayerController : MonoBehaviour
     {
         var toggleDistance = weapons.Count - currentWeaponIndex;
         weapons.Add(controller);
+        controller.Initialize();
         if (!hasFired)
         {
             //swap to new weapon

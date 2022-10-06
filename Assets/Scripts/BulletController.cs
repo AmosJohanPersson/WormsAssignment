@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    //Handles bullet movement and dealing damge to player + totalling style points from trickshots. 
+
     public Rigidbody rigid;
     public GameObject onHitEffect;
     public float style;

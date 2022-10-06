@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FishBullet : BulletController
 {
+    //Fish gun bullet controller that allows ballistic arc and spawning an explosion on inpact
     public FishGunController controller;
 
     public void Initialize(Vector3 force, float styleBonus, FishGunController weaponController)

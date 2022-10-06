@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class FishGunController : WeaponController
 {
+    //Defines shooting, reloading and ammo for the fish "gun". 
+
     public GameObject bulletPrefab;
 
-    [SerializeField] private float totalAmmoTanks;
+    [SerializeField] private int totalAmmoTanks;
+    [SerializeField] private PistolAmmoDisplay ammoTanksUI;
+
     [SerializeField] private float styleDamage;
 
     [SerializeField] private float maxCharge;
@@ -20,21 +24,23 @@ public class FishGunController : WeaponController
 
     [SerializeField] private LineRenderer lineRenderer;
 
+    private const int UI_INDEX = 2;
     private float charge;
     private bool isFishAtHome = true;
-    private Vector3 fishStartPosition;
 
     public override void Shoot()
     {
         if (isFishAtHome)
         {
-            Debug.Log("home");
             GameObject bullet = Instantiate(bulletPrefab, gun.transform.position, gun.transform.rotation);
             Vector3 force = GetLaunchForce();
             bullet.GetComponent<FishBullet>().Initialize(force, styleDamage, this);
             isFishAtHome = false;
-            gun.SetActive(isFishAtHome);
+            gun.SetActive(false);
             charge = 0;
+
+            totalAmmoTanks--;
+            UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks);
         }
     }
 
@@ -43,11 +49,13 @@ public class FishGunController : WeaponController
         if (!isFishAtHome)
         {
             isFishAtHome = true;
-
-            totalAmmoTanks--;
             if (totalAmmoTanks <= 0)
             {
                 GetPlayer().RemoveWeapon(this);
+            }
+            else
+            {
+                UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks);
             }
         }
 
@@ -57,8 +65,6 @@ public class FishGunController : WeaponController
     {
         if (isFishAtHome)
         {
-
-            Debug.Log("home");
             gun.transform.LookAt(target);
             PaintTrajectory();
         }
@@ -70,6 +76,7 @@ public class FishGunController : WeaponController
 
     public void PaintTrajectory()
     {
+        //Calculates how far along the ground the fish will fly given the current force and paints a line accordingly
         float mass = bulletPrefab.GetComponent<Rigidbody>().mass;
         Vector3 force = GetLaunchForce();
         Vector3 velocity = (force / mass) * Time.fixedDeltaTime;
@@ -102,6 +109,26 @@ public class FishGunController : WeaponController
     {
         lineRenderer.SetPosition(0, gun.transform.position);
         lineRenderer.SetPosition(1, gun.transform.position);
+    }
+
+    public override void SetEnabled(bool state)
+    {
+        gun.SetActive(state);
+        if (state)
+        {
+            UIManager.DisplayAmmo(UI_INDEX);
+            UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks);
+        }
+        else
+        {
+            UIManager.HideAmmo(UI_INDEX);
+        }
+    }
+
+    public override void HideUI()
+    {
+        UIManager.HideAmmo(UI_INDEX);
+
     }
 }
 

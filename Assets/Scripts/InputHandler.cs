@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
+    //Central input hub. All input isduring play scene is read through here and sent to current player or the turn manager
+
     private static InputHandler instance;
 
     private static bool controlsActive = true;

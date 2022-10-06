@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TriggerGroupController : MonoBehaviour
 {
+    //Script controlling multiple colliders behaving as one big collider for the hoops
+
     public float jumpBonus;
     public float shotBonus;
     public float cooldown;

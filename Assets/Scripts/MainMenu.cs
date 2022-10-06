@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    //Script for storing winner name between scenes
+
     public static string winnerName;
     public static string friendshipStatus;
 

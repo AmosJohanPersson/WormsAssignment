@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
+    //This class tracks current player, handles turn switching, end gaame behaviour, and broadcasts onTurnEnd for cleanup behaviour in other classes.
+
     private static TurnManager instance;
 
     private bool gracePeriodActive;
@@ -41,18 +43,13 @@ public class TurnManager : MonoBehaviour
             cameras[i].Priority = 0;
         }
         cameras[activeTeamIndex].Priority = 1;
-
-
-        if (players.Length != cameras.Length)
-        {
-            Debug.LogError("Wrong number of cameras for players!");
-        }
     }
 
     void Update()
     {
         if (timerActive)
         {
+            // timerActive means game is running
             timeLeft -= Time.deltaTime;
             if(!gracePeriodActive)
             {
@@ -64,6 +61,7 @@ public class TurnManager : MonoBehaviour
             }
             else
             {
+                //Grace period between turn (started in swap turns function)
                 if (timeLeft <= 0)
                 {
                     gracePeriodActive = false;
@@ -96,6 +94,8 @@ public class TurnManager : MonoBehaviour
 
     public static void SwapTurns()
     {
+        //Swaps camera, changes current player, tells player to end/start turn. 
+
         TurnManager tM = GetInstance();
         GetCurrentPlayer().EndTurn();
         //Switching off old camera
@@ -111,8 +111,8 @@ public class TurnManager : MonoBehaviour
         InputHandler.SetControlsActive(false);
         UIManager.DisableTimer();
 
-        GetCurrentPlayer().RefreshTurn();
         onTurnEnd();
+        GetCurrentPlayer().RefreshTurn();
     }
 
     public static void EndGame()

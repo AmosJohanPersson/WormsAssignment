@@ -7,12 +7,17 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    //This class handles displaying and updating UI at the request of other scripts.
+
     private static UIManager instance;
 
+    [SerializeField] private Slider water;
     [SerializeField] private Slider health;
     [SerializeField] private Slider style;
     [SerializeField] private TMP_Text messageBox;
     [SerializeField] private TMP_Text timer;
+    [SerializeField] private PistolAmmoDisplay[] ammoDisplays;
+    private bool useDualAmmoBars;
 
     void Awake()
     {
@@ -26,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        useDualAmmoBars = false;
         UpdateBars();
     }
 
@@ -84,13 +90,40 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public static void HideUI()
+    public static void DisplayAmmo(int index, bool sprayGun = false, float water = 1)
     {
+        UIManager UIM = GetInstance();
+        if (sprayGun)
+        {
+            UIM.useDualAmmoBars = true;
+            UIM.water.gameObject.SetActive(true);
+            UIM.water.value = water;
+        }
+
+        UIM.ammoDisplays[index].Display();
+    }
+
+    public static void HideAmmo(int index)
+    {
+        UIManager UIM = GetInstance();
+        if (UIM.useDualAmmoBars)
+        {
+            UIM.useDualAmmoBars = false;
+            UIM.water.gameObject.SetActive(false);
+        }
+
+        UIM.ammoDisplays[index].Hide();
 
     }
 
-    public static void RevealUI()
+    public static void UpdateAmmo(int index, int amount, float water = 0)
     {
+        UIManager UIM = GetInstance();
+        if (UIM.useDualAmmoBars)
+        {
+            UIM.water.value = water;
+        }
 
+        UIM.ammoDisplays[index].SetDisplayedAmmo(amount);
     }
 }

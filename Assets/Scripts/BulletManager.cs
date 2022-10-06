@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
+    //Allows bullets to avoid destroying themselves
     private static BulletManager instance;
 
     void Awake()
@@ -26,12 +27,6 @@ public class BulletManager : MonoBehaviour
 
     public static void CleanWDelay(GameObject gObject, float delayInS)
     {
-        GetInstance().StartCoroutine(GetInstance().InternalCleanWDelay(gObject, delayInS));
-    }
-
-    IEnumerator InternalCleanWDelay(GameObject gObject, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(gObject);
+        Destroy(gObject, delayInS);
     }
 }

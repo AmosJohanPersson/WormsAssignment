@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    //Script for health pickup
+
     [SerializeField] private float healing;
 
     void OnTriggerEnter(Collider other)

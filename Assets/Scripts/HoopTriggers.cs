@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HoopTriggers : MonoBehaviour
 {
+    //Controller script for individual hoop triggers.
+    //Each trigger calls a TriggerGroupController to share trigger cooldowns and prevent multiple hits.
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

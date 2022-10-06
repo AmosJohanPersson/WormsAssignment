@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickupSpawner : MonoBehaviour
 {
+    //Implements respawn cooldown for pickups
+
     [SerializeField] private GameObject pickup;
     [SerializeField] private int respawnTime;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickupSpinner : MonoBehaviour
 {
+    //Spins and bobs gameobjects
+
     [SerializeField] private Vector3 angles;
     [SerializeField] private float bobHeight;
     [SerializeField] private float bobSpeed;

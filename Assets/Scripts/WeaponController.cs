@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
+    // Quasi-abstract parent class for all weapon types. Implements aiming, get player, and listening to onTurnEnd event. 
+
     public Transform muzzle;
 
     public GameObject gun;
@@ -12,7 +14,6 @@ public class WeaponController : MonoBehaviour
     {
         TurnManager.onTurnEnd += CleanUp;
         Reload();
-        CleanUp();
     }
 
     public PlayerController GetPlayer()
@@ -25,7 +26,7 @@ public class WeaponController : MonoBehaviour
         gun.transform.LookAt(target);
     }
 
-    public void SetEnabled(bool state)
+    public virtual void SetEnabled(bool state)
     {
         gun.SetActive(state);
     }
@@ -41,5 +42,15 @@ public class WeaponController : MonoBehaviour
     }
     public virtual void HoldBehaviour()
     {
+    }
+
+    public virtual void HideUI()
+    {
+
+    }
+
+    public virtual void Initialize()
+    {
+
     }
 }
