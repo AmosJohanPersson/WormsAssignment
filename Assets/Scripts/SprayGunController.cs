@@ -24,7 +24,6 @@ public class SprayGunController : WeaponController
 
     public override void Initialize()
     {
-        Debug.Log("init");
         secondsSinceFire = firingDelay;
         ammoNow = ammoMax;
         emptyTank = false;
@@ -58,21 +57,20 @@ public class SprayGunController : WeaponController
 
     public override void Reload()
     {
-        if (ammoNow < ammoMax)
+        if (ammoNow < ammoMax && !emptyTank)
         {
+            totalAmmoTanks--;
             emptyTank = false;
             ammoNow = ammoMax;
-
-
-            if (totalAmmoTanks <= 0)
-            {
-                GetPlayer().RemoveWeapon(this);
-            }
-            else
-            {
-                UIManager.DisplayAmmo(UI_INDEX, sprayGun: true, water: ammoNow / ammoMax);
-                UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks, ammoNow / ammoMax);
-            }
+        }
+        if (totalAmmoTanks <= 0)
+        {
+            GetPlayer().RemoveWeapon(this);
+        }
+        else
+        {
+            UIManager.DisplayAmmo(UI_INDEX, sprayGun: true, water: ammoNow / ammoMax);
+            UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks, ammoNow / ammoMax);
         }
     }
 

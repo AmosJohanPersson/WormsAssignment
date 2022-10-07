@@ -40,6 +40,7 @@ public class FishGunController : WeaponController
             charge = 0;
 
             totalAmmoTanks--;
+            UIManager.DisplayAmmo(UI_INDEX);
             UIManager.UpdateAmmo(UI_INDEX, totalAmmoTanks);
         }
     }
